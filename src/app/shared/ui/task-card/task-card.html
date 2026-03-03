@@ -4,7 +4,7 @@
     <h4 class="task-title mb-1 font-bold text-sm">{{ task.title }}</h4>
     <p class="task-description text-xs">{{ task.description }}</p>
   </div>
-  <div class="my-4"> 
+  <div class="my-4">
     @if(task.completedAt) {
       <p class="task-due-date">Completed on {{ task.completedAt | date:'mediumDate'}}</p>
     } @else if(task.isOverdue) {
@@ -12,7 +12,10 @@
     } @else {
       <p class="task-due-date">Due in {{ dueDate() }}</p>
     }
-    <p class="task-tags text-xs">{{ task.tags.join(', ') }}</p>
+
+    @if(task.tags && task.tags.length > 0) {
+      <p class="task-tags text-xs">{{ task.tags.join(', ') }}</p>
+    }
   </div>
   <hr>
   <div class="task-assignee flex items-center gap-1 mt-4">

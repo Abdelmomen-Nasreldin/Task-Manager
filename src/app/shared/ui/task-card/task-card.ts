@@ -15,7 +15,7 @@ export class TaskCard implements OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['task']) {
       const currentTask = changes['task'].currentValue as Task;
-      this.dueDate.set(this.formatDueDateInDays(currentTask.dueDate));
+      this.dueDate.set(this.formatDueDateInDays(currentTask.dueDate?.toString() ?? new Date().toString()));
     }
   }
 

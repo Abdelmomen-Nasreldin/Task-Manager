@@ -2,7 +2,7 @@
   header
 </header>
 <main class="flex">
-  <aside class="w-60">
+  <aside class="w-60 p-4">
     <nav>
       <ul>
         @for (page of pages; track page.path) {
@@ -12,8 +12,14 @@
         }
       </ul>
     </nav>
+    <button type="button" class="active w-full mt-5 p-2 rounded-md" (click)="openModal()">+ New Task</button>
+
   </aside>
   <section class="main-content">
     <router-outlet />
   </section>
 </main>
+
+@if(isModalOpen()) {
+<app-modal (closeModal)="closeModal()" (saveModal)="saveModal($event)" #modal></app-modal>
+}

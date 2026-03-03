@@ -1,0 +1,14 @@
+// @use '@angular/material' as mat;
+
+// // Customize the entire app. Change :root to your selector if you want to scope the styles.
+// :root {
+//   @include mat.form-field-overrides((
+//     disabled-input-text-placeholder-color: orange,
+//     disabled-leading-icon-color: red,
+//   ));
+// }
+
+.overlay{
+  background: rgba(0, 0, 0, .7);
+}
+
