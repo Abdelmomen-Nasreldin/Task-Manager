@@ -10,6 +10,7 @@ export const routes: Routes = [
   {
     path: PAGE_ROUTES.DASHBOARD,
     redirectTo: '',
+    pathMatch: 'full',
   },
   {
     path: PAGE_ROUTES.TASKS,
