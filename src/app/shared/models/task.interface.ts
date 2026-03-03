@@ -6,7 +6,7 @@ export interface Task {
   description: string; /// required
   status: TaskStatus; /// required
   priority: TaskPriority; /// required
-  dueDate: string; /// required
+  dueDate: Date | null; /// required
   isOverdue: boolean;
   completedAt?: string;
   assignee: Pick<User, "id" | "name" | "email" | "avatar"> | null; /// required

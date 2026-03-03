@@ -1,2 +1,25 @@
+<header>
+  header
+</header>
+<main class="flex">
+  <aside class="w-60 p-4">
+    <nav>
+      <ul>
+        @for (page of pages; track page.path) {
+          <li class="py-2 px-4 cursor-pointer" [class.active]="isActive(page.path)" (click)="navigateTo(page.path)">
+            <a [routerLink]="page.path">{{ page.name }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+    <button type="button" class="active w-full mt-5 p-2 rounded-md" (click)="openModal()">+ New Task</button>
 
-<router-outlet />
+  </aside>
+  <section class="main-content">
+    <router-outlet />
+  </section>
+</main>
+
+@if(isModalOpen()) {
+<app-modal (closeModal)="closeModal()" (saveModal)="saveModal($event)" #modal></app-modal>
+}
