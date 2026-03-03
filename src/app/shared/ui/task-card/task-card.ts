@@ -1,10 +1,10 @@
 import { Component, Input, OnChanges, signal, SimpleChanges } from '@angular/core';
 import { Task } from '../../models/task.interface';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-task-card',
-  imports: [DatePipe],
+  imports: [CommonModule, DatePipe],
   templateUrl: './task-card.html',
   styleUrl: './task-card.scss',
 })
