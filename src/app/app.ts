@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Modal } from './shared/ui/modal/modal';
 import { Task } from './shared/models/task.interface';
 import { TaskService } from './core/services/task/task-service';
+import { NotifyService } from './core/services/notify/notify-service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class App {
   protected readonly title = signal('task-manager');
   private readonly router = inject(Router);
   private readonly tasksService = inject(TaskService);
+  private readonly notifyService = inject(NotifyService);
   pages = Object.values(PAGE_ROUTES_DATA);
 
   isModalOpen = signal(false);
@@ -27,8 +29,16 @@ export class App {
   }
   saveModal(task: Task) {
     console.log('saveModal', task);
-    this.tasksService.createTask(task);
-    this.closeModal();
+    this.tasksService.createTask(task).subscribe({
+      next: () => {
+        this.notifyService.showSuccessAlert();
+        this.closeModal();
+      },
+      error: (error) => {
+        this.notifyService.showErrorAlert(error);
+        this.closeModal();
+      }
+    });
   }
 
   isActive(page: string) {

@@ -3,6 +3,7 @@ import { TaskService } from '../../../core/services/task/task-service';
 import { TaskCard } from "../../../shared/ui/task-card/task-card";
 import { Task } from '../../../shared/models/task.interface';
 import { Modal } from "../../../shared/ui/modal/modal";
+import { NotifyService } from '../../../core/services/notify/notify-service';
 
 @Component({
   selector: 'app-tasks-page',
@@ -11,6 +12,7 @@ import { Modal } from "../../../shared/ui/modal/modal";
   styleUrl: './tasks-page.scss',
 })
 export class TasksPage {
+  private readonly notifyService = inject(NotifyService);
   private readonly taskService = inject(TaskService);
   tasks = this.taskService.tasks;
   isModalOpen = signal<boolean>(false);
@@ -29,16 +31,20 @@ export class TasksPage {
     console.log('onDeleteTask', id);
     this.deleteTask(id);
   }
+  
   deleteTask(id: string) {
-    this.taskService.deleteTask(id).subscribe({
-      next: (deletedTask) => {
-        console.log('Task deleted successfully', deletedTask);
-        this.closeModal();
-      },
-      error: (error) => {
-        console.error('Error deleting task', error);
-        this.closeModal();
-        alert('Error deleting task');
+    this.notifyService.showConfirmAlert('warning').then((result) => {
+      if (result.isConfirmed) {
+        this.taskService.deleteTask(id).subscribe({
+          next: (deletedTask) => {
+            this.notifyService.showSuccessAlert();
+            this.closeModal();
+          },
+          error: (error) => {
+            this.notifyService.showErrorAlert(error);
+            this.closeModal();
+          }
+        });
       }
     });
   }
@@ -46,13 +52,12 @@ export class TasksPage {
   updateTask(task: Task) {
     this.taskService.updateTask(task).subscribe({
       next: (updatedTask) => {
-        console.log('Task updated successfully', updatedTask);
+        this.notifyService.showSuccessAlert();
         this.closeModal();
       },
       error: (error) => {
-        console.error('Error updating task', error);
+        this.notifyService.showErrorAlert(error);
         this.closeModal();
-        alert('Error updating task');
       }
     });
   }
