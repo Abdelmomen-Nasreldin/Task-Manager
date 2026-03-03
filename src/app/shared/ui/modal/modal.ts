@@ -27,7 +27,7 @@ export class Modal implements OnInit, OnChanges {
   ngOnInit(): void {
     console.log(this.updatedTask());
   }
-  updatedTask = input<Task>();
+  updatedTask = input<Task | null>(null);
   closeModal = output<void>();
   saveModal = output<Task>();
 

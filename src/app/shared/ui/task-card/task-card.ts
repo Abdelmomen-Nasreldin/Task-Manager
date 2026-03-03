@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, signal, SimpleChanges } from '@angular/core';
+import { Component, input, Input, OnChanges, output, signal, SimpleChanges } from '@angular/core';
 import { Task } from '../../models/task.interface';
 import { CommonModule, DatePipe } from '@angular/common';
 
@@ -9,9 +9,11 @@ import { CommonModule, DatePipe } from '@angular/common';
   styleUrl: './task-card.scss',
 })
 export class TaskCard implements OnChanges{
-  @Input() task!: Task;
+  task = input.required<Task>();
+  isEditOrDelete = input(false);
   dueDate = signal<string>('');
-
+  editTask = output<Task>();
+  deleteTask = output<string>();
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['task']) {
       const currentTask = changes['task'].currentValue as Task;
@@ -19,6 +21,12 @@ export class TaskCard implements OnChanges{
     }
   }
 
+  onEditTask() {
+    this.editTask.emit(this.task());
+  }
+  onDeleteTask() {
+    this.deleteTask.emit(this.task().id);
+  }
   // need to be pipe instead of in component
   private formatDueDateInDays(dueDate: string): string {
     const now = new Date();
