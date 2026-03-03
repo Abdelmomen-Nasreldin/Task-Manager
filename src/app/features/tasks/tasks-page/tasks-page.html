@@ -5,7 +5,7 @@
   </div>
   <div class="tasks-page-content">
     <div class="tasks-page-content-tasks-container flex flex-col gap-3">
-      @for (task of tasks(); track task.id) {
+      @for (task of tasks() | taskFilter: currentFilter; track task.id) {
         <app-task-card [task]="task" [isEditOrDelete]="true" (editTask)="onEditClick($event)" (deleteTask)="onDeleteClick($event)"></app-task-card>
       }
     </div>
