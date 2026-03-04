@@ -21,5 +21,5 @@
 </main>
 
 @if(isModalOpen()) {
-<app-modal (closeModal)="closeModal()" (saveModal)="saveModal($event)" #modal></app-modal>
+<app-modal (closeModal)="closeModal()" (saveModal)="saveModal($event)" #modal [users]="users()"></app-modal>
 }
