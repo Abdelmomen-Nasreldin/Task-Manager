@@ -1,0 +1,19 @@
+<div class="user-card">
+  <div class="user-card-header">
+    <h3>{{ user().name }}</h3>
+  </div>
+  <div class="user-card-content">
+    <p>{{ user().email }}</p>
+  </div>
+  <div class="user-card-footer">
+    <p>Assigned tasks: {{ user().assignedTasks?.length }}</p>
+    @if(user().assignedTasks?.length) {
+      <div>
+        @for (task of user().assignedTasks!; track task.id) {
+          <p>{{ task.title }}</p>
+        }
+      </div>
+    }
+
+  </div>
+</div>
