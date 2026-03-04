@@ -5,7 +5,7 @@ import { User } from '../../models/user.interface';
 export interface TaskFilter {
   priority?: TaskPriority | null;
   status?: TaskStatus | null;
-  assigneeId?: User['id'] | null;
+  assigneeName?: User['name'] | null;
 }
 
 @Pipe({
@@ -27,7 +27,7 @@ export class TaskFilterPipe implements PipeTransform {
         return false;
       }
 
-      if (filter.assigneeId && task.assignee?.id !== filter.assigneeId) {
+      if (filter.assigneeName && task.assignee?.id !== filter.assigneeName) {
         return false;
       }
 

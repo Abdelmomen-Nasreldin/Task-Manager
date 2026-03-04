@@ -4,11 +4,11 @@ import { TaskCard } from "../../../shared/ui/task-card/task-card";
 import { Task } from '../../../shared/models/task.interface';
 import { Modal } from "../../../shared/ui/modal/modal";
 import { NotifyService } from '../../../core/services/notify/notify-service';
-import { TaskFilter, TaskFilterPipe } from '../../../shared/pipes/task-filter/task-filter-pipe';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tasks-page',
-  imports: [TaskCard, Modal, TaskFilterPipe],
+  imports: [TaskCard, Modal, CommonModule],
   templateUrl: './tasks-page.html',
   styleUrl: './tasks-page.scss',
 })
@@ -18,12 +18,6 @@ export class TasksPage {
   tasks = this.taskService.tasks;
   isModalOpen = signal<boolean>(false);
   updatedTask = signal<Task | null>(null);
-
-  currentFilter: TaskFilter = {
-    priority: 'high',
-    assigneeId: null,
-    status: 'done',
-  };
 
   openModal() {
     this.isModalOpen.set(true);
