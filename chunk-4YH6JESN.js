@@ -1,0 +1,1 @@
+import{Pb as i,_a as t,sb as n,tb as s}from"./chunk-7UQOBNHL.js";var c=class a{static \u0275fac=function(e){return new(e||a)};static \u0275cmp=t({type:a,selectors:[["app-analytics-page"]],decls:2,vars:0,template:function(e,l){e&1&&(n(0,"p"),i(1,"analytics-page works!"),s())},encapsulation:2})};export{c as AnalyticsPage};
