@@ -21,6 +21,7 @@ export class DashboardPage implements OnInit {
     status: null,
   });
   filteredBy = signal<string>('All');
+  searchBy = signal<'assignee' | 'title'>('assignee');
   ngOnInit(): void {
   }
 
@@ -36,7 +37,6 @@ export class DashboardPage implements OnInit {
   }
   filterTasksByAssignee(assignee: User['name']) {
     if (assignee) {
-
       this.currentFilter.set({ assigneeName: assignee, priority: null, status: null });
       this.filteredBy.set('Assignee: ' + assignee);
     } else {
@@ -46,8 +46,19 @@ export class DashboardPage implements OnInit {
   }
 
 
+  filterTasksByTitle(title: string) {
+    this.currentFilter.set({ title, priority: null, assigneeName: null, status: null });
+    this.filteredBy.set('Title: ' + title);
+  }
   getAllTasks() {
     this.currentFilter.set({ priority: null, assigneeName: null, status: null });
     this.filteredBy.set('All');
+  }
+
+  onSearchByChange(event: Event) {
+    this.getAllTasks();
+    const target = event.target as HTMLSelectElement;
+    const value = target.value;
+    this.searchBy.set(value as 'assignee' | 'title');
   }
 }

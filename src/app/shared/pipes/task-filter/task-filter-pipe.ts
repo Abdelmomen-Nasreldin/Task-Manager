@@ -6,6 +6,7 @@ export interface TaskFilter {
   priority?: TaskPriority | null;
   status?: TaskStatus | null;
   assigneeName?: User['name'] | null;
+  title?: Task['title'] | null;
 }
 
 @Pipe({
@@ -28,6 +29,10 @@ export class TaskFilterPipe implements PipeTransform {
       }
 
       if (filter.assigneeName && task.assignee?.name?.toLowerCase().includes(filter.assigneeName.toLowerCase()) !== true) {
+        return false;
+      }
+
+      if (filter.title && task.title.toLowerCase().includes(filter.title.toLowerCase()) !== true) {
         return false;
       }
 

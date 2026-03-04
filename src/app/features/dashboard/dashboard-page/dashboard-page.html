@@ -20,8 +20,20 @@
             <button (click)="filterTasksByStatus('done')" [class.active]="currentFilter().status === 'done'">Done</button>
           </div>
         </div>
-        <div class="dashboard-page-content-left-header-buttons-assignee filter-buttons">
-          <input type="search" placeholder="Search by assignee" (input)="filterTasksByAssignee($event.target.value)">
+        <div class="dashboard-page-content-left-header-buttons-search flex gap-2">
+          <select name="search-by" id="search-by" (change)="onSearchByChange($event)">
+            <option value="assignee">Assignee</option>
+            <option value="title">Title</option>
+          </select> <br>
+          @if (searchBy() === 'assignee') {
+            <div class="dashboard-page-content-left-header-buttons-assignee filter-buttons">
+              <input type="search" placeholder="Search by assignee" (input)="filterTasksByAssignee($event.target.value)">
+            </div>
+          } @else {
+            <div class="dashboard-page-content-left-header-buttons-assignee filter-buttons">
+              <input type="search" placeholder="Search by Task title" (input)="filterTasksByTitle($event.target.value)">
+            </div>
+          }
         </div>
       </div>
       <div class="dashboard-page-content w-fit">
