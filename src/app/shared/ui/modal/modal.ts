@@ -28,6 +28,7 @@ export class Modal implements OnInit, OnChanges {
     console.log(this.updatedTask());
   }
   updatedTask = input<Task | null>(null);
+  users = input.required<User[]>();
   closeModal = output<void>();
   saveModal = output<Task>();
 
@@ -37,7 +38,7 @@ export class Modal implements OnInit, OnChanges {
     status: new FormControl('', [Validators.required]),
     priority: new FormControl('', [Validators.required]),
     dueDate: new FormControl<Date | null>(null, [Validators.required]),
-    // assignee: new FormControl<Pick<User, "id" | "name" | "email" | "avatar"> | null>(null, [Validators.required]),
+    assignee: new FormControl<Pick<User, "id" | "name" | "email" | "avatar"> | null>(null, [Validators.required]),
   });
 
   onCloseModal() {

@@ -12,6 +12,5 @@
 
 
 @if(isModalOpen()) {
-<app-modal [updatedTask]="updatedTask()" (closeModal)="closeModal()" (saveModal)="updateTask($event)"
-  #modal></app-modal>
+<app-modal [updatedTask]="updatedTask()" (closeModal)="closeModal()" (saveModal)="updateTask($event)" [users]="users()"></app-modal>
 }

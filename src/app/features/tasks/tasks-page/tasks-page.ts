@@ -5,6 +5,7 @@ import { Task } from '../../../shared/models/task.interface';
 import { Modal } from "../../../shared/ui/modal/modal";
 import { NotifyService } from '../../../core/services/notify/notify-service';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../../core/services/user/user-service';
 
 @Component({
   selector: 'app-tasks-page',
@@ -19,6 +20,9 @@ export class TasksPage {
   isModalOpen = signal<boolean>(false);
   updatedTask = signal<Task | null>(null);
 
+  readonly userService = inject(UserService);
+  users = this.userService.users;
+  
   openModal() {
     this.isModalOpen.set(true);
   }

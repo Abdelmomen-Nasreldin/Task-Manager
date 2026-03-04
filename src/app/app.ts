@@ -6,6 +6,7 @@ import { Modal } from './shared/ui/modal/modal';
 import { Task } from './shared/models/task.interface';
 import { TaskService } from './core/services/task/task-service';
 import { NotifyService } from './core/services/notify/notify-service';
+import { UserService } from './core/services/user/user-service';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,9 @@ export class App {
   private readonly tasksService = inject(TaskService);
   private readonly notifyService = inject(NotifyService);
   pages = Object.values(PAGE_ROUTES_DATA);
+
+  readonly userService = inject(UserService);
+  users = this.userService.users;
 
   isModalOpen = signal(false);
   openModal() {
