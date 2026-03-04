@@ -1,0 +1,22 @@
+.user-card {
+  border: 1px solid rgba(224, 224, 224, 1);
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+  width: 100%;
+}
+.user-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

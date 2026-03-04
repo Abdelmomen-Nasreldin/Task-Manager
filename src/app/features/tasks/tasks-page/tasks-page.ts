@@ -4,10 +4,12 @@ import { TaskCard } from "../../../shared/ui/task-card/task-card";
 import { Task } from '../../../shared/models/task.interface';
 import { Modal } from "../../../shared/ui/modal/modal";
 import { NotifyService } from '../../../core/services/notify/notify-service';
+import { CommonModule } from '@angular/common';
+import { UserService } from '../../../core/services/user/user-service';
 
 @Component({
   selector: 'app-tasks-page',
-  imports: [TaskCard, Modal],
+  imports: [TaskCard, Modal, CommonModule],
   templateUrl: './tasks-page.html',
   styleUrl: './tasks-page.scss',
 })
@@ -17,6 +19,10 @@ export class TasksPage {
   tasks = this.taskService.tasks;
   isModalOpen = signal<boolean>(false);
   updatedTask = signal<Task | null>(null);
+
+  readonly userService = inject(UserService);
+  users = this.userService.users;
+  
   openModal() {
     this.isModalOpen.set(true);
   }
@@ -31,7 +37,7 @@ export class TasksPage {
     console.log('onDeleteTask', id);
     this.deleteTask(id);
   }
-  
+
   deleteTask(id: string) {
     this.notifyService.showConfirmAlert('warning').then((result) => {
       if (result.isConfirmed) {

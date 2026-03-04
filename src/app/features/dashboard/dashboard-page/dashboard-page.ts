@@ -1,18 +1,64 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Task } from '../../../shared/models/task.interface';
 import { TaskService } from '../../../core/services/task/task-service';
-import { TaskCard } from "../../../shared/ui/task-card/task-card";
+import { TaskFilter, TaskFilterPipe } from '../../../shared/pipes/task-filter/task-filter-pipe';
+import { CommonModule } from '@angular/common';
+import { TaskPriority, TaskStatus } from '../../../shared/models/task.interface';
+import { User } from '../../../shared/models/user.interface';
+import { TasksList } from "../components/tasks-list/tasks-list";
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [TaskCard],
+  imports: [TaskFilterPipe, CommonModule, TasksList],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss',
 })
 export class DashboardPage implements OnInit {
   private readonly taskService = inject(TaskService);
   tasks = this.taskService.tasks;
-
+  currentFilter = signal<TaskFilter>({
+    priority: null,
+    assigneeName: null,
+    status: null,
+  });
+  filteredBy = signal<string>('All');
+  searchBy = signal<'assignee' | 'title'>('assignee');
   ngOnInit(): void {
+  }
+
+
+  filterTasksByPriority(priority: TaskPriority) {
+    this.currentFilter.set({ priority, assigneeName: null, status: null });
+    this.filteredBy.set('Priority: ' + priority);
+  }
+
+  filterTasksByStatus(status: TaskStatus) {
+    this.currentFilter.set({ status, priority: null, assigneeName: null });
+    this.filteredBy.set('Status: ' + status);
+  }
+  filterTasksByAssignee(assignee: User['name']) {
+    if (assignee) {
+      this.currentFilter.set({ assigneeName: assignee, priority: null, status: null });
+      this.filteredBy.set('Assignee: ' + assignee);
+    } else {
+      this.currentFilter.set({ priority: null, assigneeName: null, status: null });
+      this.filteredBy.set('All');
+    }
+  }
+
+
+  filterTasksByTitle(title: string) {
+    this.currentFilter.set({ title, priority: null, assigneeName: null, status: null });
+    this.filteredBy.set('Title: ' + title);
+  }
+  getAllTasks() {
+    this.currentFilter.set({ priority: null, assigneeName: null, status: null });
+    this.filteredBy.set('All');
+  }
+
+  onSearchByChange(event: Event) {
+    this.getAllTasks();
+    const target = event.target as HTMLSelectElement;
+    const value = target.value;
+    this.searchBy.set(value as 'assignee' | 'title');
   }
 }

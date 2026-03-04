@@ -3,8 +3,8 @@
     <h5 class="task-priority mb-1 {{ task().priority.toLowerCase()  }}">{{ task().priority }}</h5>
     <div class="flex gap-2">
       @if(isEditOrDelete()) {
-        <span class="cursor-pointer" (click)="onEditTask()">edit</span>
-        <span class="cursor-pointer" (click)="onDeleteTask()">delete</span>
+        <button class="px-2 py-1 text-xs bg-blue-500 text-white rounded-md" (click)="onEditTask()">edit</button>
+        <button class="px-2 py-1 text-xs bg-red-500 text-white rounded-md" (click)="onDeleteTask()">delete</button>
       }
 
     </div>

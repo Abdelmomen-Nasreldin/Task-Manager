@@ -1,18 +1,16 @@
-<p>tasks-page works!</p>
-<div class="dashboard-page">
-  <div class="dashboard-page-header">
-    <h1>All Tasks</h1>
+<div class="tasks-page">
+  <div class="tasks-page-header">
+    <h1 class="text-2xl font-bold my-4">All Tasks</h1>
   </div>
-  <div class="tasks-page-content">
-    <div class="tasks-page-content-tasks-container flex flex-col gap-3">
-      @for (task of tasks(); track task.id) {
-        <app-task-card [task]="task" [isEditOrDelete]="true" (editTask)="onEditClick($event)" (deleteTask)="onDeleteClick($event)"></app-task-card>
-      }
-    </div>
+  <div class="tasks-page-content-tasks-container flex flex-col gap-3">
+    @for (task of tasks(); track task.id) {
+    <app-task-card [task]="task" [isEditOrDelete]="true" (editTask)="onEditClick($event)"
+      (deleteTask)="onDeleteClick($event)"></app-task-card>
+    }
   </div>
 </div>
 
 
 @if(isModalOpen()) {
-  <app-modal [updatedTask]="updatedTask()" (closeModal)="closeModal()" (saveModal)="updateTask($event)" #modal></app-modal>
+<app-modal [updatedTask]="updatedTask()" (closeModal)="closeModal()" (saveModal)="updateTask($event)" [users]="users()"></app-modal>
 }

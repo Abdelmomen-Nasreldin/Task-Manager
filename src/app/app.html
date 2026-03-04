@@ -1,8 +1,8 @@
-<header>
+<header class="p-4 bg-white shadow-md">
   header
 </header>
-<main class="flex">
-  <aside class="w-60 p-4">
+<main class="flex mt-1 min-h-screen">
+  <aside class="w-60 p-4 bg-white shadow-md">
     <nav>
       <ul>
         @for (page of pages; track page.path) {
@@ -15,11 +15,11 @@
     <button type="button" class="active w-full mt-5 p-2 rounded-md" (click)="openModal()">+ New Task</button>
 
   </aside>
-  <section class="main-content">
+  <section class="main-content p-4 w-full">
     <router-outlet />
   </section>
 </main>
 
 @if(isModalOpen()) {
-<app-modal (closeModal)="closeModal()" (saveModal)="saveModal($event)" #modal></app-modal>
+<app-modal (closeModal)="closeModal()" (saveModal)="saveModal($event)" #modal [users]="users()"></app-modal>
 }

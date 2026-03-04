@@ -1,19 +1,43 @@
-<p>dashboard-page works!</p>
-<div class="dashboard-page">
+<div class="dashboard-page w-full">
   <div class="dashboard-page-header">
-    <h1>Dashboard</h1>
+    <h1 class="text-2xl font-bold my-4">Dashboard</h1>
   </div>
   <div class="dashboard-page-content">
     <div class="dashboard-page-content-left">
       <div class="dashboard-page-content-left-header">
-        <h2>Tasks</h2>
-      </div>
-      <div class="dashboard-page-content">
-        <div class="dashboard-page-content-tasks-container">
-          @for (task of tasks(); track task.id) {
-            <app-task-card [task]="task"></app-task-card>
+        <div class="dashboard-page-content-left-header-buttons w-full flex flex-col gap-2">
+          <div class="dashboard-page-content-left-header-buttons-assignee filter-buttons">
+            <button (click)="getAllTasks()" [class.active]="!currentFilter().priority && !currentFilter().status">All</button>
+          </div>
+          <div class="dashboard-page-content-left-header-buttons-priority filter-buttons">
+            <button (click)="filterTasksByPriority('high')" [class.active]="currentFilter().priority === 'high'">High Priority</button>
+            <button (click)="filterTasksByPriority('medium')" [class.active]="currentFilter().priority === 'medium'">Medium Priority</button>
+            <button (click)="filterTasksByPriority('low')" [class.active]="currentFilter().priority === 'low'">Low Priority</button>
+          </div>
+          <div class="dashboard-page-content-left-header-buttons-status filter-buttons">
+            <button (click)="filterTasksByStatus('todo')" [class.active]="currentFilter().status === 'todo'">Todo</button>
+            <button (click)="filterTasksByStatus('in_progress')" [class.active]="currentFilter().status === 'in_progress'">In Progress</button>
+            <button (click)="filterTasksByStatus('done')" [class.active]="currentFilter().status === 'done'">Done</button>
+          </div>
+        </div>
+        <div class="dashboard-page-content-left-header-buttons-search flex gap-2">
+          <select name="search-by" id="search-by" (change)="onSearchByChange($event)">
+            <option value="assignee">Assignee</option>
+            <option value="title">Title</option>
+          </select> <br>
+          @if (searchBy() === 'assignee') {
+            <div class="dashboard-page-content-left-header-buttons-assignee filter-buttons">
+              <input type="search" placeholder="Search by assignee" (input)="filterTasksByAssignee($event.target.value)">
+            </div>
+          } @else {
+            <div class="dashboard-page-content-left-header-buttons-assignee filter-buttons">
+              <input type="search" placeholder="Search by Task title" (input)="filterTasksByTitle($event.target.value)">
+            </div>
           }
         </div>
+      </div>
+      <div class="dashboard-page-content w-fit">
+        <app-tasks-list [tasks]="tasks() | taskFilter: currentFilter()" [currentFilter]="filteredBy()"></app-tasks-list>
       </div>
     </div>
   </div>
