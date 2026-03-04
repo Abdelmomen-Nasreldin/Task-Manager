@@ -20,6 +20,9 @@
             <button (click)="filterTasksByStatus('done')" [class.active]="currentFilter().status === 'done'">Done</button>
           </div>
         </div>
+        <div class="dashboard-page-content-left-header-buttons-assignee filter-buttons">
+          <input type="search" placeholder="Search by assignee" (input)="filterTasksByAssignee($event.target.value)">
+        </div>
       </div>
       <div class="dashboard-page-content w-fit">
         <app-tasks-list [tasks]="tasks() | taskFilter: currentFilter()" [currentFilter]="filteredBy()"></app-tasks-list>

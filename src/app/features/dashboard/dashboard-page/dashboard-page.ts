@@ -34,6 +34,18 @@ export class DashboardPage implements OnInit {
     this.currentFilter.set({ status, priority: null, assigneeName: null });
     this.filteredBy.set('Status: ' + status);
   }
+  filterTasksByAssignee(assignee: User['name']) {
+    if (assignee) {
+
+      this.currentFilter.set({ assigneeName: assignee, priority: null, status: null });
+      this.filteredBy.set('Assignee: ' + assignee);
+    } else {
+      this.currentFilter.set({ priority: null, assigneeName: null, status: null });
+      this.filteredBy.set('All');
+    }
+  }
+
+
   getAllTasks() {
     this.currentFilter.set({ priority: null, assigneeName: null, status: null });
     this.filteredBy.set('All');

@@ -27,7 +27,7 @@ export class TaskFilterPipe implements PipeTransform {
         return false;
       }
 
-      if (filter.assigneeName && task.assignee?.id !== filter.assigneeName) {
+      if (filter.assigneeName && task.assignee?.name?.toLowerCase().includes(filter.assigneeName.toLowerCase()) !== true) {
         return false;
       }
 
