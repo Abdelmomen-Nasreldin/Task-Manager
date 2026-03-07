@@ -6,6 +6,9 @@ It is built with standalone Angular components, signals-based local state, and a
 
 ## Project Overview
 
+## Live Demo
+- https://task-manager-projecttest.netlify.app/
+
 ### Main Features
 - Dashboard view with task filtering by priority, status, assignee, and title
 - Full task list view with edit/delete actions (only on tasks page)
