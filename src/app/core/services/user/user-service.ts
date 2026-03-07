@@ -1,61 +1,37 @@
-import { Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable } from '@angular/core';
 import { User } from '../../../shared/models/user.interface';
+import { TaskService } from '../task/task-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private readonly usersSignal = signal<User[]>([
-    {
-      id: '1',
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      avatar: 'https://via.placeholder.com/150',
-      updatedAt: new Date().toISOString(),
-      assignedTasks: [],
-    },
-    {
-      id: '2',
-      name: 'Jane Doe',
-      email: 'jane.doe@example.com',
-      avatar: 'https://via.placeholder.com/150',
-      updatedAt: new Date().toISOString(),
-      assignedTasks: [],
-    },
-    {
-      id: '3',
-      name: 'Jim Doe',
-      email: 'jim.doe@example.com',
-      avatar: 'https://via.placeholder.com/150',
-      updatedAt: new Date().toISOString(),
-      assignedTasks: [],
-    },
-    {
-      id: '4',
-      name: 'Jill Doe',
-      email: 'jill.doe@example.com',
-      avatar: 'https://via.placeholder.com/150',
-      updatedAt: new Date().toISOString(),
-      assignedTasks: [],
-    },
-    {
-      id: '5',
-      name: 'Jack Doe',
-      email: 'jack.doe@example.com',
-      avatar: 'https://via.placeholder.com/150',
-      updatedAt: new Date().toISOString(),
-      assignedTasks: [],
-    },
-    {
-      id: '6',
-      name: 'Jill Doe',
-      email: 'jill.doe@example.com',
-      avatar: 'https://via.placeholder.com/150',
-      updatedAt: new Date().toISOString(),
-      assignedTasks: [],
-    },
-  ]);
-  public users = this.usersSignal.asReadonly();
+  private readonly taskService = inject(TaskService);
+
+  public users = computed<User[]>(() => {
+    const usersById = new Map<string, User>();
+
+    this.taskService.tasks().forEach((task) => {
+      if (!task.assignee) return;
+
+      const existingUser = usersById.get(task.assignee.id);
+      if (existingUser) {
+        existingUser.assignedTasks = [...(existingUser.assignedTasks ?? []), task];
+        return;
+      }
+
+      usersById.set(task.assignee.id, {
+        id: task.assignee.id,
+        name: task.assignee.name,
+        email: task.assignee.email,
+        avatar: task.assignee.avatar,
+        assignedTasks: [task],
+        updatedAt: new Date().toISOString(),
+      });
+    });
+
+    return Array.from(usersById.values());
+  });
 }
 
 
